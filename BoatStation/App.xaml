@@ -4,6 +4,41 @@
              xmlns:local="clr-namespace:BoatStation"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="LightGreen"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="myBorder" Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  CornerRadius="20">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="myBorder" Property="Background" Value="Cyan"/>
+                                <!--" Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect/>
+                                    </Setter.Value>
+                                </Setter-->
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#FF50A858"/>
+                                <Setter Property="Foreground" Value="LightGreen"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="DictionaryDataTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Key}" Width="170"/>
+                <TextBlock Text=" : " Width="30"/>
+                <TextBlock Text="{Binding Value}" TextWrapping="WrapWithOverflow" Width="300"/>
+            </StackPanel>
+        </DataTemplate>
     </Application.Resources>
 </Application>

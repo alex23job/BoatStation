@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoatStation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ЛОДОЧНАЯ СТАНЦИЯ" Height="450" Width="800" Icon="MainIcon.ico" Background="#FFD0D9FF" FontFamily="Times New Roman" FontSize="16" Closing="AppClosing" MinWidth="800" MinHeight="450" Foreground="#FF061BA0">
     <Grid>
         
     </Grid>

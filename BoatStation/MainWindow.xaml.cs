@@ -24,5 +24,10 @@ namespace BoatStation
         {
             InitializeComponent();
         }
+
+        private void AppClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }
