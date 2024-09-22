@@ -20,9 +20,12 @@ namespace BoatStation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string startupPath = AppDomain.CurrentDomain.BaseDirectory;
         public MainWindow()
         {
             InitializeComponent();
+            string logoPath = MainWindow.startupPath + "\\catamarans.png";
+            logo.Source = new BitmapImage(new Uri(logoPath));
         }
 
         private void AppClosing(object sender, System.ComponentModel.CancelEventArgs e)
