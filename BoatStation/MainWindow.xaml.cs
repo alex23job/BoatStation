@@ -22,6 +22,7 @@ namespace BoatStation
     {
         public static string startupPath = AppDomain.CurrentDomain.BaseDirectory;
         public MyUser currentUser = null;
+        private List<MyUser> users = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -63,8 +64,8 @@ namespace BoatStation
                 if (currentUser != null)
                 {
                     loginView.Visibility = Visibility.Hidden;
-                    if (currentUser.Rule == 3) adminView.Visibility = Visibility.Visible;
-                    if (currentUser.Rule == 0) ordersView.Visibility = Visibility.Visible;
+                    if (currentUser.Rule == 3) ViewAdminPanel();
+                    if (currentUser.Rule == 0) ViewOrdersPanel();
                     return;
                 }
             }
@@ -73,12 +74,30 @@ namespace BoatStation
 
         private void OnRegBtnClick(object sender, RoutedEventArgs e)
         {
+            RegistrationWindow rw = new RegistrationWindow();
+            if (rw.ShowDialog() == true)
+            {
 
+            }
         }
 
         private void OnSelectedDataChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void ViewAdminPanel()
+        {
+            users = MyUser.GetUserList();
+            List<string> list = new List<string>();
+            foreach (MyUser mu in users) list.Add(mu.ToString());
+            userList.ItemsSource = list;            
+            adminView.Visibility = Visibility.Visible;
+        }
+
+        private void ViewOrdersPanel()
+        {
+            ordersView.Visibility = Visibility.Visible;
         }
 
         private void OnCancelClick(object sender, RoutedEventArgs e)
@@ -88,7 +107,11 @@ namespace BoatStation
 
         private void OnNewUserClick(object sender, RoutedEventArgs e)
         {
+            RegistrationWindow rw = new RegistrationWindow();
+            if (rw.ShowDialog() == true)
+            {
 
+            }
         }
 
         private void OnEditUserClick(object sender, RoutedEventArgs e)

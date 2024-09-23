@@ -92,7 +92,7 @@ namespace BoatStation
             return mu;
         }
 
-        public static List<MyUser> GetUserList(string email, string pass)
+        public static List<MyUser> GetUserList()
         {
             MySqlConnection connection = DBUtils.GetDBConnection();
             connection.Open();
