@@ -20,41 +20,51 @@
             <Image x:Name="logo" Margin="5"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Background="#FF011593">
-            <Button x:Name="newBooking" Content="Новая бронь" Background="#FF90D0EE" Height="40" Margin="5,15,5,5" FontSize="24" FontWeight="Bold" Foreground="#FF011593"/>
-            <Button x:Name="delBooking" Content="Снять бронь" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593"/>
-            <Button x:Name="editBooking" Content="Изменить бронь" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593"/>
-            <Button x:Name="manual" Content="Инструкция" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593"/>
+            <Button x:Name="newBooking" Content="Новая бронь" Background="#FF90D0EE" Height="40" Margin="5,15,5,5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnNewOrderClick"/>
+            <Button x:Name="delBooking" Content="Снять бронь" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnDelOrderClick"/>
+            <Button x:Name="editBooking" Content="Изменить бронь" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnEditOrderClick"/>
+            <Button x:Name="manual" Content="Инструкция" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnManualClick"/>
         </StackPanel>
-        <StackPanel x:Name="loginView" Orientation="Vertical" Grid.Column="1" Grid.RowSpan="2" Visibility="Hidden">
+        <StackPanel x:Name="loginView" Orientation="Vertical" Grid.Column="1" Grid.RowSpan="2" Visibility="Visible">
             <TextBlock Text="Добро пожаловать на лодочную станцию нашего города !" Foreground="#FFCFEEFD" HorizontalAlignment="Center" Margin="0,50,0,20" FontSize="36" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"/>
             <TextBlock Text="Пожалуйста, авторизуйтесь ..." Foreground="#FF90D0EE" HorizontalAlignment="Center" Margin="0,0,0,10" FontSize="28" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"/>
-            <Button x:Name="login" Content="ВОЙТИ" Width="260" Height="50" Background="#FF90D0EE" FontSize="24" FontWeight="Bold" Foreground="#FF011593" BorderBrush="#FF011593" Padding="2"/>
-            <Button x:Name="registration" Content="РЕГИСТРАЦИЯ" Width="260" Height="50" Background="#FF90D0EE" FontSize="24" FontWeight="Bold" Foreground="#FF011593" BorderBrush="#FF011593" Padding="2" Margin="0,20"/>
+            <Button x:Name="login" Content="ВОЙТИ" Width="260" Height="50" Background="#FF90D0EE" FontSize="24" FontWeight="Bold" Foreground="#FF011593" BorderBrush="#FF011593" Padding="2" Click="OnLoginBtnClick"/>
+            <Button x:Name="registration" Content="РЕГИСТРАЦИЯ" Width="260" Height="50" Background="#FF90D0EE" FontSize="24" FontWeight="Bold" Foreground="#FF011593" BorderBrush="#FF011593" Padding="2" Margin="0,20" Click="OnRegBtnClick"/>
         </StackPanel>
-        <StackPanel x:Name="ordersView"  Orientation="Vertical" Grid.Column="1" Grid.RowSpan="2" Visibility="Visible">
+        <StackPanel x:Name="ordersView"  Orientation="Vertical" Grid.Column="1" Grid.RowSpan="2" Visibility="Hidden">
             <Label Content="Просмотр забронированного" Foreground="#FF011593" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36" FontWeight="Bold"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
                 <Label Content="Выберите дату : " Foreground="#FFD6E8FF" FontSize="22"/>
-                <DatePicker x:Name="date" IsDropDownOpen="False" SelectedDateFormat="Short" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+                <DatePicker x:Name="date" IsDropDownOpen="False" SelectedDateFormat="Short" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedDateChanged="OnSelectedDataChanged" />
             </StackPanel>
             <DataGrid x:Name="ordersData" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="1" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="Название" MinWidth="100"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="Номер" MinWidth="50"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="09:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="10:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="11:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="12:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="13:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="14:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="15:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="16:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="17:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="18:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="19:00" MinWidth="20"/>
-                    <DataGridTextColumn Binding="{Binding Path=DateUpdate}" FontSize="14" FontFamily="Times New Roman" Header="20:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=BoatName}" FontSize="14" FontFamily="Times New Roman" Header="Название" MinWidth="100"/>
+                    <DataGridTextColumn Binding="{Binding Path=BoatNumber}" FontSize="14" FontFamily="Times New Roman" Header="Номер" MinWidth="50"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour09}" FontSize="14" FontFamily="Times New Roman" Header="09:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour10}" FontSize="14" FontFamily="Times New Roman" Header="10:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour11}" FontSize="14" FontFamily="Times New Roman" Header="11:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour12}" FontSize="14" FontFamily="Times New Roman" Header="12:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour13}" FontSize="14" FontFamily="Times New Roman" Header="13:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour14}" FontSize="14" FontFamily="Times New Roman" Header="14:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour15}" FontSize="14" FontFamily="Times New Roman" Header="15:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour16}" FontSize="14" FontFamily="Times New Roman" Header="16:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour17}" FontSize="14" FontFamily="Times New Roman" Header="17:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour18}" FontSize="14" FontFamily="Times New Roman" Header="18:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour19}" FontSize="14" FontFamily="Times New Roman" Header="19:00" MinWidth="20"/>
+                    <DataGridTextColumn Binding="{Binding Path=Hour20}" FontSize="14" FontFamily="Times New Roman" Header="20:00" MinWidth="20"/>
                 </DataGrid.Columns> 
             </DataGrid>
+        </StackPanel>
+        <StackPanel x:Name="adminView"  Orientation="Vertical" Grid.Column="1" Grid.RowSpan="2" Visibility="Hidden">
+            <Label Content="Список сотрудников и клиентов" Foreground="#FF011593" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="24" FontWeight="Bold"/>
+            <ListView x:Name="userList"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,3">
+                <Button x:Name="addUser" Content="Добавить" Height="40" FontSize="24" Background="#FF90D0EE" FontWeight="Bold" Foreground="#FF011593" Click="OnNewUserClick" Margin="5,0" Width="140"/>
+                <Button x:Name="editUser" Content="Править" Height="40" FontSize="24" Background="#FF90D0EE" FontWeight="Bold" Foreground="#FF011593" Click="OnEditUserClick" Margin="5,0" Width="140"/>
+                <Button x:Name="delUser" Content="Удалить" Height="40" FontSize="24" Background="#FF90D0EE" FontWeight="Bold" Foreground="#FF011593" Click="OnDelUserClick" Margin="5,0" Width="140"/>
+                <Button x:Name="cancel" Content="Закрыть" Height="40" FontSize="24" Background="#FF90D0EE" FontWeight="Bold" Foreground="#FF011593" Click="OnCancelClick" Margin="5,0" Width="140"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
