@@ -77,7 +77,14 @@ namespace BoatStation
             RegistrationWindow rw = new RegistrationWindow();
             if (rw.ShowDialog() == true)
             {
+                if (rw.Client != null)
+                {
 
+                }
+                /*else if (rw.User != null)
+                {
+
+                }*/
             }
         }
 
@@ -110,7 +117,14 @@ namespace BoatStation
             RegistrationWindow rw = new RegistrationWindow();
             if (rw.ShowDialog() == true)
             {
+                if (rw.Client != null)
+                {
 
+                }
+                else if (rw.User != null)
+                {
+                    DBUtils.AddUser(rw.User);
+                }
             }
         }
 
