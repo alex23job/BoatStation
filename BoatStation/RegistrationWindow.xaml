@@ -34,17 +34,17 @@
             <Label Content="Пароль" Foreground="#FF00009E" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="5"/>
             <Label Content="Телефон" Foreground="#FF00009E" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="6"/>
             <Label Content="Паспорт" Foreground="#FF00009E" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="7"/>
-            <TextBox x:Name="textID" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280"/>
+            <TextBox x:Name="textID" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280" ToolTip="Заполняется программой"/>
             <ComboBox x:Name="cmbRule" Grid.Row="1" Grid.Column="1" Margin="5" IsReadOnly="True" Foreground="#FF0068FF" Background="#FFA2E6F5" BorderBrush="#FF08088D"/>
-            <TextBox x:Name="firstName" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280"/>
-            <TextBox x:Name="secondName" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280"/>
-            <TextBox x:Name="login" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280"/>
+            <TextBox x:Name="firstName" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280" ToolTip="пример : Петров"/>
+            <TextBox x:Name="secondName" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280" ToolTip="пример : Олег"/>
+            <TextBox x:Name="login" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280" ToolTip="пример : oleg@mail.ru"/>
             <StackPanel x:Name="password" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Margin="5,0" VerticalAlignment="Center">
-                <TextBox x:Name="pass1" Foreground="#FF0068FF" Margin="1" Width="280"/>
-                <TextBox x:Name="pass2" Foreground="#FF0068FF" Margin="1" Width="280"/>
+                <TextBox x:Name="pass1" Foreground="#FF0068FF" Margin="1" Width="280" ToolTip="Пароли в двух полях должны совпадать"/>
+                <TextBox x:Name="pass2" Foreground="#FF0068FF" Margin="1" Width="280" ToolTip="Пароли в двух полях должны совпадать"/>
             </StackPanel>
-            <TextBox x:Name="tlf" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280"/>
-            <TextBox x:Name="pasport" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280"/>
+            <TextBox x:Name="tlf" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280" ToolTip="пример : 89001001234"/>
+            <TextBox x:Name="pasport" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" Margin="5" Foreground="#FF0068FF" Width="280" ToolTip="пример : 0100 100000"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
             <Button x:Name="btnCancel" Content="Отменить" Foreground="#FF00009E" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="45" IsCancel="True" Margin="20,0" Background="#FF90C8EE"/>

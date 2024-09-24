@@ -19,6 +19,8 @@ namespace BoatStation
     /// </summary>
     public partial class RegistrationWindow : Window
     {
+        int mode = 0;
+        MyUser user = null;
         public RegistrationWindow()
         {
             InitializeComponent();
@@ -26,9 +28,19 @@ namespace BoatStation
             cmbRule.SelectedIndex = 0;
         }
 
+        public void SetMode(int mod)
+        {
+            mode = mod;
+        }
+
         private void OnOK_Click(object sender, RoutedEventArgs e)
         {
-
+            if (firstName.Text == "") { MessageBox.Show("Не указана фамилия !"); return; }
+            if (secondName.Text == "") { MessageBox.Show("Не указано имя !"); return; }
+            if (login.Text == "") { MessageBox.Show("Не указан логин (email) !"); return; }
+            if ((pass1.Text == "") || (pass2.Text == "") || (pass1.Text != pass2.Text)) { MessageBox.Show("Не указаны или не соврадают пароли !"); return; }
+            if (tlf.Text == "") { MessageBox.Show("Не указан тедефон !"); return; }
+            if (pasport.Text == "") { MessageBox.Show("Не указаны данные паспорта !"); return; }
         }
     }
 }
