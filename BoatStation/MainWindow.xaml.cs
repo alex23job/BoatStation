@@ -177,7 +177,11 @@ namespace BoatStation
 
         private void OnNewBoatClick(object sender, RoutedEventArgs e)
         {
+            BoatWindow bw = new BoatWindow();
+            if (bw.ShowDialog() == true)
+            {
 
+            }
         }
 
         private void OnEditBoatClick(object sender, RoutedEventArgs e)
