@@ -71,7 +71,7 @@ namespace BoatStation
                     //MessageBox.Show(s);
                     if (eml == email && pass == password)
                     {
-                        MessageBox.Show("yes => " + s);
+                        //MessageBox.Show("yes => " + s);
                         mu = new MyUser(id, rule, name);
                         break;
                     }
@@ -82,6 +82,48 @@ namespace BoatStation
             {
                 MessageBox.Show("Error : " + ex);
                 //listBox1.Items.Add("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return mu;
+        }
+
+        public static MyUser GetUser(int userID)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            MyUser mu = null;
+            try
+            {
+                string sql = "SELECT * FROM tbl_user";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                int id, rule;
+                string name, eml, password;
+
+                while (reader.Read())
+                {
+                    int.TryParse(reader[0].ToString(), out id);
+                    name = reader[1].ToString();
+                    eml = reader[2].ToString();
+                    password = reader[3].ToString();
+                    int.TryParse(reader[4].ToString(), out rule);
+                    if (id == userID)
+                    {
+                        mu = new MyUser(id, rule, name, eml, password);
+                        break;
+                    }
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error : " + ex);
             }
             finally
             {

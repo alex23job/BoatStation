@@ -22,6 +22,7 @@ namespace BoatStation
     {
         public static string startupPath = AppDomain.CurrentDomain.BaseDirectory;
         public MyUser currentUser = null;
+        public MyClient currentClient = null;
         private List<MyUser> users = null;
         public MainWindow()
         {
@@ -79,12 +80,23 @@ namespace BoatStation
             {
                 if (rw.Client != null)
                 {
-
+                    if (rw.User != null)
+                    {
+                        if (MyUser.CheckUser(rw.User.Email, rw.User.Password) == null)
+                        {
+                            DBUtils.AddUser(rw.User);
+                            currentUser = MyUser.CheckUser(rw.User.Email, rw.User.Password);
+                            rw.Client.SetUser(currentUser);
+                            DBUtils.AddClient(rw.Client);
+                            currentClient = MyClient.GetClient(currentUser.ID);
+                            ViewOrdersPanel();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Клиент с Email <{rw.User.Email}> уже есть в базе !");
+                        }
+                    }
                 }
-                /*else if (rw.User != null)
-                {
-
-                }*/
             }
         }
 
@@ -104,6 +116,7 @@ namespace BoatStation
 
         private void ViewOrdersPanel()
         {
+            loginView.Visibility = Visibility.Hidden;
             ordersView.Visibility = Visibility.Visible;
         }
 
@@ -119,12 +132,23 @@ namespace BoatStation
             {
                 if (rw.Client != null)
                 {
-
+                    if (rw.User != null)
+                    {
+                        if (MyUser.CheckUser(rw.User.Email, rw.User.Password) == null)
+                        {
+                            DBUtils.AddUser(rw.User);
+                            currentUser = MyUser.CheckUser(rw.User.Email, rw.User.Password);
+                            rw.Client.SetUser(currentUser);
+                            DBUtils.AddClient(rw.Client);
+                            //currentClient = MyClient.GetClient(currentUser.ID);
+                        }
+                    }
                 }
                 else if (rw.User != null)
                 {
                     DBUtils.AddUser(rw.User);
                 }
+                ViewAdminPanel();
             }
         }
 

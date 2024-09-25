@@ -74,6 +74,54 @@ namespace BoatStation
                 connection = null;
             }
         }
+
+        public static void AddClient(MyClient mc)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "INSERT INTO tbl_client(user_ID, first_name, second_name, tlf, passport)" + "values(@uid, @fname, @sname, @tel, @pasport)";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter id_param = new MySqlParameter("@uid", MySqlDbType.Int32, 4);
+                id_param.Value = mc.ClientUser.ID;
+                cmd.Parameters.Add(id_param);
+
+                MySqlParameter fnm_param = new MySqlParameter("@fname", MySqlDbType.String, 20);
+                fnm_param.Value = mc.FirstName;
+                cmd.Parameters.Add(fnm_param);
+
+                MySqlParameter snm_param = new MySqlParameter("@sname", MySqlDbType.String, 20);
+                snm_param.Value = mc.SecondName;
+                cmd.Parameters.Add(snm_param);
+
+                MySqlParameter tlf_param = new MySqlParameter("@tel", MySqlDbType.String, 15);
+                tlf_param.Value = mc.Tlf;
+                cmd.Parameters.Add(tlf_param);
+
+                MySqlParameter pasp_param = new MySqlParameter("@pasport", MySqlDbType.String, 12);
+                pasp_param.Value = mc.Pasport;
+                cmd.Parameters.Add(pasp_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
     }
 
     class DBMySqlUtils
