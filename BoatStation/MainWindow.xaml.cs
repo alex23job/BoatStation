@@ -24,6 +24,7 @@ namespace BoatStation
         public MyUser currentUser = null;
         public MyClient currentClient = null;
         private List<MyUser> users = null;
+        private List<Boat> boats = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -66,6 +67,7 @@ namespace BoatStation
                 {
                     loginView.Visibility = Visibility.Hidden;
                     if (currentUser.Rule == 3) ViewAdminPanel();
+                    if (currentUser.Rule == 2) ViewBoatsPanel();
                     if (currentUser.Rule == 0) ViewOrdersPanel();
                     return;
                 }
@@ -120,9 +122,20 @@ namespace BoatStation
             ordersView.Visibility = Visibility.Visible;
         }
 
+        private void ViewBoatsPanel()
+        {
+            boats = Boat.GetBoatList();
+            List<string> list = new List<string>();
+            foreach (Boat b in boats) list.Add(b.ToString());
+            boatList.ItemsSource = list;
+            loginView.Visibility = Visibility.Hidden;
+            boatView.Visibility = Visibility.Visible;
+        }
+
         private void OnCancelClick(object sender, RoutedEventArgs e)
         {
-
+            loginView.Visibility = Visibility.Visible;
+            adminView.Visibility = Visibility.Hidden;
         }
 
         private void OnNewUserClick(object sender, RoutedEventArgs e)
@@ -160,6 +173,27 @@ namespace BoatStation
         private void OnDelUserClick(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OnNewBoatClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnEditBoatClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnDelBoatClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnCancelBoatClick(object sender, RoutedEventArgs e)
+        {
+            loginView.Visibility = Visibility.Visible;
+            boatView.Visibility = Visibility.Hidden;
         }
     }
 }
