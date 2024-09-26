@@ -108,6 +108,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Boat.cs" />
+    <Compile Include="BoatOrder.cs" />
     <Compile Include="BoatWindow.xaml.cs">
       <DependentUpon>BoatWindow.xaml</DependentUpon>
     </Compile>
