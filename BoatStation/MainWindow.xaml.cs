@@ -180,7 +180,14 @@ namespace BoatStation
             BoatWindow bw = new BoatWindow();
             if (bw.ShowDialog() == true)
             {
-
+                if (bw.myBoat != null)
+                {
+                    if (Boat.CheckBoat(bw.myBoat) == null)
+                    {
+                        DBUtils.AddBoat(bw.myBoat);
+                    }
+                }
+                ViewBoatsPanel();
             }
         }
 

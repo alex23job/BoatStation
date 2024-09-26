@@ -26,7 +26,7 @@ namespace BoatStation
 
         public override string ToString()
         {
-            return $"BoatID {BoatID:0000} {BoatName:000000000000} {SerialNumber:00000000} {Description}";
+            return $"BoatID {BoatID:0000} {BoatName, -20} {SerialNumber, -15} {Description}";
         }
 
         public static List<Boat> GetBoatList()
@@ -66,6 +66,48 @@ namespace BoatStation
             }
 
             return list;
+        }
+
+        public static Boat CheckBoat(Boat bot)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            Boat resBoat = null;
+            try
+            {
+                string sql = "SELECT * FROM tbl_boat";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                int id;
+                string name, sn, descr;
+
+                while (reader.Read())
+                {
+                    int.TryParse(reader[0].ToString(), out id);
+                    name = reader[1].ToString();
+                    descr = reader[2].ToString();
+                    sn = reader[3].ToString();
+                    if (name == bot.BoatName && descr == bot.Description && sn == bot.SerialNumber)
+                    {
+                        resBoat = new Boat(id, name, descr, sn);
+                    }
+                    //string s = string.Format("id:{0} name:{1} email:{2} password:{3} rule:{4}", id, name, eml, password, rule);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error : " + ex);
+                //listBox1.Items.Add("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return resBoat;
         }
     }
 }

@@ -122,6 +122,46 @@ namespace BoatStation
                 connection = null;
             }
         }
+
+        public static void AddBoat(Boat bot)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "INSERT INTO tbl_boat(boat_name, description, serial_number)" + "values(@name, @descr, @sn)";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter nm_param = new MySqlParameter("@name", MySqlDbType.String, 30);
+                nm_param.Value = bot.BoatName;
+                cmd.Parameters.Add(nm_param);
+
+                MySqlParameter des_param = new MySqlParameter("@descr", MySqlDbType.String, 150);
+                des_param.Value = bot.Description;
+                cmd.Parameters.Add(des_param);
+
+                MySqlParameter sn_param = new MySqlParameter("@sn", MySqlDbType.String, 20);
+                sn_param.Value = bot.SerialNumber;
+                cmd.Parameters.Add(sn_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                MessageBox.Show("Boat adding! Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Boat adding => Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
     }
 
     class DBMySqlUtils
