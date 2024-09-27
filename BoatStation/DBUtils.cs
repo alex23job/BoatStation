@@ -162,6 +162,42 @@ namespace BoatStation
                 connection = null;
             }
         }
+
+        public static void AddBoatOrder(BoatOrder bo)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "INSERT INTO tbl_orders(date, boat_orders)" + "values(@dt, @orders)";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter dt_param = new MySqlParameter("@dt", MySqlDbType.Date, 10);
+                dt_param.Value = bo.Date;
+                cmd.Parameters.Add(dt_param);
+
+                MySqlParameter ord_param = new MySqlParameter("@orders", MySqlDbType.String, 100);
+                ord_param.Value = bo.GetCSV();
+                cmd.Parameters.Add(ord_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                MessageBox.Show("BoatOrders adding! Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("BoatOrders adding => Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
     }
 
     class DBMySqlUtils

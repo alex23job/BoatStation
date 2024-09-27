@@ -47,5 +47,19 @@ namespace BoatStation
             for (int i = 0; i < 12; i++) sb.Append(hourOrders[i] + sim);
             return sb.ToString();
         }
+
+        public bool SetOrder(int h, int uid)
+        {
+            bool res = false;
+            if (h >= 0 && h < 12)
+            {
+                if (hourOrders[h] == "")
+                {
+                    hourOrders[h] = $"{uid:D04}";
+                    return true;
+                }
+            }
+            return res;
+        }
     }
 }
