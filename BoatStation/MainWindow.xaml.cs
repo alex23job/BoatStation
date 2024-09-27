@@ -25,6 +25,7 @@ namespace BoatStation
         public MyClient currentClient = null;
         private List<MyUser> users = null;
         private List<Boat> boats = null;
+        private List<BoatOrder> orders = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -118,6 +119,14 @@ namespace BoatStation
 
         private void ViewOrdersPanel()
         {
+            orders = BoatOrder.GetOrdersList();
+            if (orders.Count == 0)
+            {
+                if (boats == null) boats = Boat.GetBoatList();
+                DateTime dt = DateTime.Now;
+                foreach (Boat bot in boats) orders.Add(new BoatOrder(dt, bot.BoatID));
+            }
+            ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, DateTime.Now);
             loginView.Visibility = Visibility.Hidden;
             ordersView.Visibility = Visibility.Visible;
         }

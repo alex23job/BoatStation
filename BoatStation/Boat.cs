@@ -68,6 +68,45 @@ namespace BoatStation
             return list;
         }
 
+        public static Boat GetBoat(int boat_id)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            Boat resBoat = null;
+            try
+            {
+                string sql = "SELECT * FROM tbl_boat WHERE id = @id";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+                cmd.Parameters.AddWithValue("@id", boat_id);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                int id;
+                string name, sn, descr;
+
+                while (reader.Read())
+                {
+                    int.TryParse(reader[0].ToString(), out id);
+                    name = reader[1].ToString();
+                    descr = reader[2].ToString();
+                    sn = reader[3].ToString();
+                    resBoat = new Boat(id, name, descr, sn);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error : " + ex);
+                //listBox1.Items.Add("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return resBoat;
+        }
+
         public static Boat CheckBoat(Boat bot)
         {
             MySqlConnection connection = DBUtils.GetDBConnection();
