@@ -18,7 +18,7 @@ namespace BoatStation
         public string SecondName { get; }
         public MyUser ClientUser { get { return user; } }
 
-        public string TblClient { get { return $"{ClientID:0000}"; } }
+        public string TblClient { get { return $"{ClientID:D04}"; } }
 
         public MyClient() { }
         public MyClient(int id, string fnm, string snm, string tn, string pasp, MyUser mu)

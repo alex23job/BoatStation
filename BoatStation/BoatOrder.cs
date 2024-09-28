@@ -65,6 +65,16 @@ namespace BoatStation
             return res;
         }
 
+        public void ClearOrder(int h)
+        {
+            hourOrders[h] = "";
+        }
+
+        public bool CheckOrders(DateTime dt, int bid)
+        {
+            return (dt == date) && (bid == BoatID); 
+        }
+
         public static List<BoatOrder> GetOrdersList()
         {
             MySqlConnection connection = DBUtils.GetDBConnection();

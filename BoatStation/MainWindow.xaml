@@ -37,7 +37,7 @@
                 <Label Content="Выберите дату : " Foreground="#FFD6E8FF" FontSize="22"/>
                 <DatePicker x:Name="date" IsDropDownOpen="False" SelectedDateFormat="Short" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedDateChanged="OnSelectedDataChanged" />
             </StackPanel>
-            <DataGrid x:Name="ordersData" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="1" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14">
+            <DataGrid x:Name="ordersData" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="1" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14" CurrentCellChanged="OnCurrentCellsChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=BoatName}" FontSize="14" FontFamily="Times New Roman" Header="Название" MinWidth="100"/>
                     <DataGridTextColumn Binding="{Binding Path=BoatNumber}" FontSize="14" FontFamily="Times New Roman" Header="Номер" MinWidth="50"/>

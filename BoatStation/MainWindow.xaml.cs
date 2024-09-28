@@ -26,6 +26,7 @@ namespace BoatStation
         private List<MyUser> users = null;
         private List<Boat> boats = null;
         private List<BoatOrder> orders = null;
+        private DateTime currentDate = DateTime.Now;
         public MainWindow()
         {
             InitializeComponent();
@@ -69,7 +70,11 @@ namespace BoatStation
                     loginView.Visibility = Visibility.Hidden;
                     if (currentUser.Rule == 3) ViewAdminPanel();
                     if (currentUser.Rule == 2) ViewBoatsPanel();
-                    if (currentUser.Rule == 0) ViewOrdersPanel();
+                    if (currentUser.Rule == 0)
+                    {
+                        currentClient = MyClient.GetClient(currentUser.ID);
+                        ViewOrdersPanel();
+                    }                    
                     return;
                 }
             }
@@ -105,7 +110,8 @@ namespace BoatStation
 
         private void OnSelectedDataChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            currentDate = (date.SelectedDate == null) ? DateTime.Now : (DateTime)date.SelectedDate;
+            ViewOrdersPanel();
         }
 
         private void ViewAdminPanel()
@@ -119,16 +125,34 @@ namespace BoatStation
 
         private void ViewOrdersPanel()
         {
+            date.SelectedDate = currentDate;
             orders = BoatOrder.GetOrdersList();
             if (orders.Count == 0)
             {
                 if (boats == null) boats = Boat.GetBoatList();
-                DateTime dt = DateTime.Now;
-                foreach (Boat bot in boats) orders.Add(new BoatOrder(dt, bot.BoatID));
+                foreach (Boat bot in boats) orders.Add(new BoatOrder(currentDate, bot.BoatID));
             }
-            ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, DateTime.Now);
+            ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, currentDate);
             loginView.Visibility = Visibility.Hidden;
             ordersView.Visibility = Visibility.Visible;
+        }
+
+        private void UpdateViewOrdersPanel()
+        {
+            date.SelectedDate = currentDate;
+            //orders = BoatOrder.GetOrdersList();
+            /*if (orders.Count == 0)
+            {
+                if (boats == null) boats = Boat.GetBoatList();
+                foreach (Boat bot in boats) orders.Add(new BoatOrder(currentDate, bot.BoatID));
+            }*/
+            if (orders != null)
+            {
+                //ordersData.ItemsSource = null;
+                ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, currentDate);
+            }
+            //loginView.Visibility = Visibility.Hidden;
+            //ordersView.Visibility = Visibility.Visible;
         }
 
         private void ViewBoatsPanel()
@@ -214,6 +238,64 @@ namespace BoatStation
         {
             loginView.Visibility = Visibility.Visible;
             boatView.Visibility = Visibility.Hidden;
+        }
+
+        private void OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void OnCurrentCellsChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show($"sender => {sender.ToString()}\nargs => {e.ToString()}");
+            DataGrid dg = sender as DataGrid;
+            if (dg != null)
+            {
+                OrderView bor = dg.CurrentCell.Item as OrderView;
+                int zn_col = dg.CurrentColumn.DisplayIndex;
+                MessageBox.Show($"BoatID:{bor.BoatNumber} {bor.BoatName}  hour={zn_col + 7}");
+                BoatOrder bo = null;
+                if (orders != null)
+                {
+                    int.TryParse(bor.BoatNumber, out int id);
+                    foreach(BoatOrder b in orders)
+                    {
+                        if (b.CheckOrders(currentDate, id))
+                        {
+                            bo = b;
+                            break;
+                        }
+                    }
+                }
+                if (currentUser.Rule == 0)
+                {
+                    if (bo != null)
+                    {
+                        if (bo.hourOrders[zn_col - 2] == "")
+                        {   //  забронировать для текущего клиента
+                            //bo.hourOrders[zn_col - 2] = currentClient.TblClient;
+                            bo.SetOrder(zn_col - 2, currentClient.ClientUser.ID);
+                        }
+                        else
+                        {   //  снять бронь ?
+                            if (MessageBox.Show($"Выбрана запись клиента : BoatID:{bor.BoatNumber} {bor.BoatName}  hour={zn_col + 7}\n\nОтменить бронь ?", "Снятие брони клиента", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            {
+                                bo.ClearOrder(zn_col - 2);
+                            }
+                        }
+                        UpdateViewOrdersPanel();
+                    }
+                }
+                if (currentUser.Rule == 1)
+                {
+
+                }
+            }
         }
     }
 }
