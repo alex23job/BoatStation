@@ -149,6 +149,29 @@ namespace BoatStation
             if (orders != null)
             {
                 //ordersData.ItemsSource = null;
+                //ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, currentDate);
+                bool isNew = false;
+                foreach(BoatOrder bo in orders)
+                {
+                    if (bo.OrderID == 0)
+                    {
+                        DBUtils.AddBoatOrder(bo);
+                        isNew = true;
+                    }
+                    else
+                    {
+                        if (bo.IsEdit)
+                        {
+                            DBUtils.UpdateBoatOrder(bo);
+                            bo.ChangeSaved();
+                        }
+                    }
+                }
+                if (isNew)
+                {
+                    orders = BoatOrder.GetOrdersList();
+                    
+                }
                 ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, currentDate);
             }
             //loginView.Visibility = Visibility.Hidden;
@@ -258,7 +281,7 @@ namespace BoatStation
             {
                 OrderView bor = dg.CurrentCell.Item as OrderView;
                 int zn_col = dg.CurrentColumn.DisplayIndex;
-                MessageBox.Show($"BoatID:{bor.BoatNumber} {bor.BoatName}  hour={zn_col + 7}");
+                //MessageBox.Show($"BoatID:{bor.BoatNumber} {bor.BoatName}  hour={zn_col + 7}");
                 BoatOrder bo = null;
                 if (orders != null)
                 {

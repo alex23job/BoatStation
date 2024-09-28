@@ -10,6 +10,8 @@ namespace BoatStation
 {
     public class BoatOrder
     {
+        int id = 0;
+        public int OrderID { get { return id; } }
         DateTime date;
         int boat_id;
         public int BoatID { get { return boat_id; } }
@@ -17,6 +19,8 @@ namespace BoatStation
 
         public DateTime Date { get { return date; } }
         public string strDate { get { return $"{date.Day:D02}.{date.Month:D02}.{date.Year:D04}"; } }
+        bool isEdit = false;
+        public bool IsEdit { get { return isEdit; } }
 
         public BoatOrder() { }
         public BoatOrder(DateTime dt, int id)
@@ -25,10 +29,11 @@ namespace BoatStation
             boat_id = id;
         }
 
-        public BoatOrder(string csv, char sim = ';')
+        public BoatOrder(int boid, string csv, char sim = ';')
         {
+            id = boid;
             string[] ar = csv.Split(sim);
-            if (ar.Length == 14)
+            if (ar.Length >= 14)
             {
                 date = DateTime.Parse(ar[0]);
                 /*string[] sdt = ar[0].Split('.');
@@ -40,6 +45,11 @@ namespace BoatStation
                 int.TryParse(ar[1], out boat_id);
                 for (int i = 0; i < 12; i++) hourOrders[i] = ar[i + 2];
             }
+        }
+
+        public void ChangeSaved()
+        {
+            isEdit = false;
         }
 
         public string GetCSV(string sim = ";")
@@ -59,6 +69,7 @@ namespace BoatStation
                 if (hourOrders[h] == "")
                 {
                     hourOrders[h] = $"{uid:D04}";
+                    isEdit = true;
                     return true;
                 }
             }
@@ -67,12 +78,16 @@ namespace BoatStation
 
         public void ClearOrder(int h)
         {
-            hourOrders[h] = "";
+            if (h >= 0 && h < 12)
+            {
+                hourOrders[h] = "";
+                isEdit = true;
+            }
         }
 
         public bool CheckOrders(DateTime dt, int bid)
         {
-            return (dt == date) && (bid == BoatID); 
+            return (dt.Day == date.Day) && (dt.Month == date.Month) && (dt.Year == date.Year) && (bid == BoatID); 
         }
 
         public static List<BoatOrder> GetOrdersList()
@@ -95,7 +110,7 @@ namespace BoatStation
                     int.TryParse(reader[0].ToString(), out id);
                     dt = DateTime.Parse(reader[1].ToString());
                     orders = reader[2].ToString();
-                    list.Add(new BoatOrder(orders));
+                    list.Add(new BoatOrder(id, orders));
                     //string s = string.Format("id:{0} name:{1} email:{2} password:{3} rule:{4}", id, name, eml, password, rule);
                 }
                 reader.Close();

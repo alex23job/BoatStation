@@ -58,7 +58,7 @@ namespace BoatStation
                 cmd.Parameters.Add(rul_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
-                MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //MessageBox.Show("Row Count affected = " + rowCount.ToString());
                 //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
 
             }
@@ -106,7 +106,7 @@ namespace BoatStation
                 cmd.Parameters.Add(pasp_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
-                MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //MessageBox.Show("Row Count affected = " + rowCount.ToString());
                 //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
 
             }
@@ -146,7 +146,7 @@ namespace BoatStation
                 cmd.Parameters.Add(sn_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
-                MessageBox.Show("Boat adding! Row Count affected = " + rowCount.ToString());
+                //MessageBox.Show("Boat adding! Row Count affected = " + rowCount.ToString());
                 //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
 
             }
@@ -180,6 +180,46 @@ namespace BoatStation
                 MySqlParameter ord_param = new MySqlParameter("@orders", MySqlDbType.String, 100);
                 ord_param.Value = bo.GetCSV();
                 cmd.Parameters.Add(ord_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                MessageBox.Show("BoatOrders adding! Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("BoatOrders adding => Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
+
+        public static void UpdateBoatOrder(BoatOrder bo)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "UPDATE tbl_orders SET date = @dt, boat_orders = @orders WHERE id = @boid";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter dt_param = new MySqlParameter("@dt", MySqlDbType.Date, 10);
+                dt_param.Value = bo.Date;
+                cmd.Parameters.Add(dt_param);
+
+                MySqlParameter ord_param = new MySqlParameter("@orders", MySqlDbType.String, 100);
+                ord_param.Value = bo.GetCSV();
+                cmd.Parameters.Add(ord_param);
+
+                MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
+                id_param.Value = bo.OrderID;
+                cmd.Parameters.Add(id_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
                 MessageBox.Show("BoatOrders adding! Row Count affected = " + rowCount.ToString());
