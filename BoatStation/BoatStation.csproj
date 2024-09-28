@@ -112,11 +112,18 @@
     <Compile Include="BoatWindow.xaml.cs">
       <DependentUpon>BoatWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ClientDataViewWindow.xaml.cs">
+      <DependentUpon>ClientDataViewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyClient.cs" />
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="BoatWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClientDataViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

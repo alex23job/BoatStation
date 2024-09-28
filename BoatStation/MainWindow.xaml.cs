@@ -70,6 +70,7 @@ namespace BoatStation
                     loginView.Visibility = Visibility.Hidden;
                     if (currentUser.Rule == 3) ViewAdminPanel();
                     if (currentUser.Rule == 2) ViewBoatsPanel();
+                    if (currentUser.Rule == 1) ViewOrdersPanel();
                     if (currentUser.Rule == 0)
                     {
                         currentClient = MyClient.GetClient(currentUser.ID);
@@ -314,9 +315,19 @@ namespace BoatStation
                         UpdateViewOrdersPanel();
                     }
                 }
-                if (currentUser.Rule == 1)
+                if (currentUser.Rule == 1 && bo != null)
                 {
-
+                    int clientID = 0;
+                    if (int.TryParse(bo.GetClientUID(zn_col - 2), out clientID))
+                    {
+                        MyClient cli = MyClient.GetClient(clientID);
+                        if (cli != null)
+                        {
+                            ClientDataViewWindow cw = new ClientDataViewWindow();
+                            cw.SetClient(cli, $"плавсредство <{bor.BoatNumber} {bor.BoatName}>\nЧас = {(zn_col + 7):D02}:00");
+                            cw.ShowDialog();
+                        }
+                    }
                 }
             }
         }

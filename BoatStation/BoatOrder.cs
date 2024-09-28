@@ -76,6 +76,16 @@ namespace BoatStation
             return res;
         }
 
+        public string GetClientUID(int h)
+        {
+            string res = "";
+            if (h >= 0 && h < 12)
+            {
+                res = hourOrders[h];
+            }
+            return res;
+        }
+
         public void ClearOrder(int h)
         {
             if (h >= 0 && h < 12)
