@@ -37,18 +37,30 @@ namespace BoatStation
             Password = pass;
         }
 
+        public bool Compare(MyUser mu)
+        {
+            bool res = true;
+            if (ID != mu.ID) return false;
+            if (Rule != mu.Rule) return false;
+            if (Name != mu.Name) return false;
+            if (Email != mu.Email) return false;
+            if (Password != mu.Password) return false;
+            return res;
+        }
+
         public override string ToString()
         {
-            return $"user_{ID} {Rules[Rule]} {Name}";
+            return $"user_{ID:D04} {Rules[Rule]} {Name}";
         }
 
         public static MyUser CheckUser(string email, string pass)
         {
             MySqlConnection connection = DBUtils.GetDBConnection();
-            connection.Open();
+            
             MyUser mu = null;
             try
             {
+                connection.Open();
                 string sql = "SELECT * FROM tbl_user";
                 MySqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;

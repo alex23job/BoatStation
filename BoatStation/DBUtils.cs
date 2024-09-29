@@ -75,6 +75,55 @@ namespace BoatStation
             }
         }
 
+        public static void UpdateUser(MyUser mu)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                //string sql = "INSERT INTO tbl_user(user_name, user_username, user_password, user_role)" + "values(@name, @email, @password, @rule)";
+                string sql = "UPDATE tbl_user SET user_name = @name, user_username = @email, user_password = @password, user_role = @rule WHERE user_id = @boid";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter nm_param = new MySqlParameter("@name", MySqlDbType.String, 45);
+                nm_param.Value = mu.Name;
+                cmd.Parameters.Add(nm_param);
+
+                MySqlParameter em_param = new MySqlParameter("@email", MySqlDbType.String, 45);
+                em_param.Value = mu.Email;
+                cmd.Parameters.Add(em_param);
+
+                MySqlParameter psw_param = new MySqlParameter("@password", MySqlDbType.String, 45);
+                psw_param.Value = mu.Password;
+                cmd.Parameters.Add(psw_param);
+
+                MySqlParameter rul_param = new MySqlParameter("@rule", MySqlDbType.Int32, 4);
+                rul_param.Value = mu.Rule;
+                cmd.Parameters.Add(rul_param);
+
+                MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
+                id_param.Value = mu.ID;
+                cmd.Parameters.Add(id_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                //MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
+
         public static void AddClient(MyClient mc)
         {
             MySqlConnection connection = DBUtils.GetDBConnection();
@@ -104,6 +153,58 @@ namespace BoatStation
                 MySqlParameter pasp_param = new MySqlParameter("@pasport", MySqlDbType.String, 12);
                 pasp_param.Value = mc.Pasport;
                 cmd.Parameters.Add(pasp_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                //MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
+        public static void UpdateClient(MyClient mc)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                //string sql = "INSERT INTO tbl_client(user_ID, first_name, second_name, tlf, passport)" + "values(@uid, @fname, @sname, @tel, @pasport)";
+                string sql = "UPDATE tbl_client SET user_ID = @uid, first_name = @fname, second_name = @sname, tlf = @tel, passport = @pasport WHERE id = @boid";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter uid_param = new MySqlParameter("@uid", MySqlDbType.Int32, 4);
+                uid_param.Value = mc.ClientUser.ID;
+                cmd.Parameters.Add(uid_param);
+
+                MySqlParameter fnm_param = new MySqlParameter("@fname", MySqlDbType.String, 20);
+                fnm_param.Value = mc.FirstName;
+                cmd.Parameters.Add(fnm_param);
+
+                MySqlParameter snm_param = new MySqlParameter("@sname", MySqlDbType.String, 20);
+                snm_param.Value = mc.SecondName;
+                cmd.Parameters.Add(snm_param);
+
+                MySqlParameter tlf_param = new MySqlParameter("@tel", MySqlDbType.String, 15);
+                tlf_param.Value = mc.Tlf;
+                cmd.Parameters.Add(tlf_param);
+
+                MySqlParameter pasp_param = new MySqlParameter("@pasport", MySqlDbType.String, 12);
+                pasp_param.Value = mc.Pasport;
+                cmd.Parameters.Add(pasp_param);
+
+                MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
+                id_param.Value = mc.ClientID;
+                cmd.Parameters.Add(id_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
                 //MessageBox.Show("Row Count affected = " + rowCount.ToString());

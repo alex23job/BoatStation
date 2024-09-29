@@ -20,6 +20,8 @@ namespace BoatStation
     public partial class RegistrationWindow : Window
     {
         int mode = 0;
+        int clientID = 0;
+        int userID = 0;
         MyUser user = null;
         MyClient client = null;
 
@@ -47,19 +49,20 @@ namespace BoatStation
             if (pasport.Text == "") { MessageBox.Show("Не указаны данные паспорта !"); return; }
             if (cmbRule.SelectedIndex == 0)
             {
-                user = new MyUser(0, 0, secondName.Text, login.Text, pass1.Text);
-                client = new MyClient(0, firstName.Text, secondName.Text, tlf.Text, pasport.Text, user);
+                user = new MyUser(userID, 0, secondName.Text, login.Text, pass1.Text);
+                client = new MyClient(clientID, firstName.Text, secondName.Text, tlf.Text, pasport.Text, user);
             }
             if (cmbRule.SelectedIndex > 0)
             {
-                user = new MyUser(0, cmbRule.SelectedIndex, secondName.Text, login.Text, pass1.Text); 
+                user = new MyUser(userID, cmbRule.SelectedIndex, secondName.Text, login.Text, pass1.Text); 
             }
             DialogResult = true;
         }
 
         public void SetClient(MyClient mc)
         {
-            textID.Text = $"{mc.TblClient}";
+            clientID = mc.ClientID;
+            //textID.Text = $"{mc.TblClient}";
             firstName.Text = mc.FirstName;
             secondName.Text = mc.SecondName;
             login.Text = mc.ClientUser.Email;
@@ -71,6 +74,7 @@ namespace BoatStation
 
         public void SetUser(MyUser mu)
         {
+            userID = mu.ID;
             textID.Text = $"{mu.ID:0000}";
             cmbRule.SelectedIndex = mu.Rule;
             login.Text = mu.Email;

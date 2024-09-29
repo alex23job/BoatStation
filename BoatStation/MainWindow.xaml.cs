@@ -224,7 +224,56 @@ namespace BoatStation
 
         private void OnEditUserClick(object sender, RoutedEventArgs e)
         {
-
+            if (userList.SelectedItem == null)
+            {
+                MessageBox.Show("Для редактирования нужно выбрать пользователя !");
+                return;
+            }
+            RegistrationWindow rw = new RegistrationWindow();
+            string sNum = userList.SelectedItem as string;
+            sNum = sNum.Substring(5, 4);
+            MyUser editUser = null; 
+            if (int.TryParse(sNum, out int uid)) editUser = MyUser.GetUser(uid);
+            if (editUser != null) rw.SetUser(editUser);
+            MyClient editClient = MyClient.GetClient(uid);
+            if (editClient != null) rw.SetClient(editClient);
+            if (rw.ShowDialog() == true)
+            {
+                if (rw.Client != null)
+                {
+                    if (editClient == null)
+                    {   // не были заполнены поля клиента
+                        DBUtils.AddClient(rw.Client);
+                    }
+                    else if (editClient.Compare(rw.Client) == false)
+                    {   //  поля клиента изменены
+                        DBUtils.UpdateClient(rw.Client);
+                        if (editUser.Compare(rw.User) == false)
+                        {
+                            DBUtils.UpdateUser(rw.User);
+                        }
+                    }
+                    //if (rw.User != null)
+                    //{
+                    //    if (MyUser.CheckUser(rw.User.Email, rw.User.Password) == null)
+                    //    {
+                    //        DBUtils.AddUser(rw.User);
+                    //        currentUser = MyUser.CheckUser(rw.User.Email, rw.User.Password);
+                    //        rw.Client.SetUser(currentUser);
+                    //        DBUtils.AddClient(rw.Client);
+                    //        //currentClient = MyClient.GetClient(currentUser.ID);
+                    //    }
+                    //}
+                }
+                else if (rw.User != null)
+                {
+                    if (editUser.Compare(rw.User) == false)
+                    {
+                        DBUtils.UpdateUser(rw.User);
+                    }
+                }
+                ViewAdminPanel();
+            }
         }
 
         private void OnDelUserClick(object sender, RoutedEventArgs e)

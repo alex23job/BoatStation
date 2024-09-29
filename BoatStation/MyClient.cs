@@ -36,6 +36,15 @@ namespace BoatStation
             if (mu != null) user = new MyUser(mu.ID, mu.Rule, mu.Name, mu.Email, mu.Password);
         }
 
+        public bool Compare(MyClient mc)
+        {
+            if (mc.FirstName != FirstName) return false;
+            if (mc.SecondName != SecondName) return false;
+            if (mc.Tlf != Tlf) return false;
+            if (mc.Pasport != Pasport) return false;
+            return mc.ClientUser.Compare(user);
+        }
+
         public static MyClient GetClient(int userID)
         {
             MyUser user = MyUser.GetUser(userID);
