@@ -253,17 +253,6 @@ namespace BoatStation
                             DBUtils.UpdateUser(rw.User);
                         }
                     }
-                    //if (rw.User != null)
-                    //{
-                    //    if (MyUser.CheckUser(rw.User.Email, rw.User.Password) == null)
-                    //    {
-                    //        DBUtils.AddUser(rw.User);
-                    //        currentUser = MyUser.CheckUser(rw.User.Email, rw.User.Password);
-                    //        rw.Client.SetUser(currentUser);
-                    //        DBUtils.AddClient(rw.Client);
-                    //        //currentClient = MyClient.GetClient(currentUser.ID);
-                    //    }
-                    //}
                 }
                 else if (rw.User != null)
                 {
@@ -293,9 +282,11 @@ namespace BoatStation
                 {
                     if (editUser.Rule == 0)
                     {
+                        DateTime dt = DateTime.Now;
                         orders = BoatOrder.GetOrdersList();
                         foreach (BoatOrder bo in orders)
                         {
+                            if (bo.Date > dt) bo.ClearClientOrders(editUser.ID);
                             if (bo.IsEdit)
                             {
                                 DBUtils.UpdateBoatOrder(bo);
@@ -329,7 +320,28 @@ namespace BoatStation
 
         private void OnEditBoatClick(object sender, RoutedEventArgs e)
         {
-
+            if (boatList.SelectedItem == null)
+            {
+                MessageBox.Show("Для редактирования нужно выбрать плавсредство !");
+                return;
+            }
+            BoatWindow bw = new BoatWindow();
+            string sNum = boatList.SelectedItem as string;
+            sNum = sNum.Substring(7, 4);
+            Boat editBot = null;
+            if (int.TryParse(sNum, out int uid)) editBot = Boat.GetBoat(uid);
+            if (editBot != null) bw.SetBoat(editBot);
+            if (bw.ShowDialog() == true)
+            {
+                if (bw.myBoat != null)
+                {
+                    if (editBot.Compare(bw.myBoat) == false)
+                    {
+                        DBUtils.UpdateBoat(bw.myBoat);
+                    }
+                }
+                ViewBoatsPanel();
+            }
         }
 
         private void OnDelBoatClick(object sender, RoutedEventArgs e)

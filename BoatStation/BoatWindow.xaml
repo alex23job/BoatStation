@@ -8,11 +8,12 @@
         Title="ОПИСАНИЕ ПЛАВАТЕЛЬНОГО СРЕДСТВА" Height="350" Width="800" Background="#FFC9E2FF" Foreground="#FF030E7A" MinWidth="600" MinHeight="350" MaxHeight="350" FontFamily="Times New Roman" FontSize="24" FontWeight="Bold">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -22,11 +23,13 @@
         <Label Content="Наименование" Foreground="#FF030E7A" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="1"/>
         <Label Content="Описание" Foreground="#FF030E7A" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="2"/>
         <Label Content="Серийный номер" Foreground="#FF030E7A" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="3"/>
+        <Label Content="Статус" Foreground="#FF030E7A" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Grid.Row="4"/>
         <TextBox x:Name="boat_id" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Foreground="#FF0068FF" Width="400" ToolTip="Заполняется программой" VerticalContentAlignment="Center"/>
         <TextBox x:Name="boat_name" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Foreground="#FF0068FF" Width="400" ToolTip="Пример : казанка" VerticalContentAlignment="Center"/>
         <TextBox x:Name="boat_descr" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Foreground="#FF0068FF" Width="400" ToolTip="Пример : двухместная лодка с вёслами" VerticalContentAlignment="Center"/>
         <TextBox x:Name="boat_sn" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Foreground="#FF0068FF" Width="400" ToolTip="Пример : K2431256" VerticalContentAlignment="Center"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <ComboBox x:Name="cmbStatus" Grid.Row="4" Grid.Column="1" Margin="5" IsReadOnly="True" Foreground="#FF0068FF" Background="#FFA2E6F5" BorderBrush="#FF08088D" ToolTip="&quot;OK&quot;, &quot;TO&quot;, &quot;Ремонт&quot;, &quot;Del&quot;"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="btnCancel" Content="Отменить" Foreground="#FF00009E" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="45" IsCancel="True" Margin="20,0" Background="#FF90C8EE"/>
             <Button x:Name="btnOK" Content="Сохранить" Foreground="#FF00009E" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="45" IsDefault="True" Click="OnOK_Click" Margin="20,0" Background="#FF90C8EE"/>
         </StackPanel>

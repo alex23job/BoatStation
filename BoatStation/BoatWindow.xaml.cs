@@ -23,6 +23,8 @@ namespace BoatStation
         public BoatWindow()
         {
             InitializeComponent();
+            cmbStatus.ItemsSource = Boat.TypeStatus;
+            cmbStatus.SelectedIndex = 0;
         }
 
         private void OnOK_Click(object sender, RoutedEventArgs e)
@@ -33,6 +35,7 @@ namespace BoatStation
             int id = 0;
             int.TryParse(boat_id.Text, out id);
             myBoat = new Boat(id, boat_name.Text, boat_descr.Text, boat_sn.Text);
+            myBoat.SetStatus(cmbStatus.SelectedIndex);
             DialogResult = true;
         }
 
@@ -42,6 +45,7 @@ namespace BoatStation
             boat_name.Text = bot.BoatName;
             boat_descr.Text = bot.Description;
             boat_sn.Text = bot.SerialNumber;
+            cmbStatus.SelectedIndex = bot.BoatNumStatus;
         }
     }
 }

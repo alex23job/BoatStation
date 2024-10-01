@@ -294,7 +294,7 @@ namespace BoatStation
             connection.Open();
             try
             {
-                string sql = "INSERT INTO tbl_boat(boat_name, description, serial_number)" + "values(@name, @descr, @sn)";
+                string sql = "INSERT INTO tbl_boat(boat_name, description, serial_number, status)" + "values(@name, @descr, @sn, @st)";
                 MySqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
 
@@ -310,6 +310,10 @@ namespace BoatStation
                 sn_param.Value = bot.SerialNumber;
                 cmd.Parameters.Add(sn_param);
 
+                MySqlParameter st_param = new MySqlParameter("@st", MySqlDbType.Int32, 4);
+                st_param.Value = bot.BoatNumStatus;
+                cmd.Parameters.Add(st_param);
+
                 int rowCount = cmd.ExecuteNonQuery();
                 //MessageBox.Show("Boat adding! Row Count affected = " + rowCount.ToString());
                 //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
@@ -319,6 +323,54 @@ namespace BoatStation
             {
                 //listBox1.Items.Add("Error : " + ex);
                 MessageBox.Show("Boat adding => Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
+
+        public static void UpdateBoat(Boat bot)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "UPDATE tbl_boat SET boat_name = @name, description = @descr, serial_number =  @sn, status = @st WHERE id = @boid";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter nm_param = new MySqlParameter("@name", MySqlDbType.String, 30);
+                nm_param.Value = bot.BoatName;
+                cmd.Parameters.Add(nm_param);
+
+                MySqlParameter des_param = new MySqlParameter("@descr", MySqlDbType.String, 150);
+                des_param.Value = bot.Description;
+                cmd.Parameters.Add(des_param);
+
+                MySqlParameter sn_param = new MySqlParameter("@sn", MySqlDbType.String, 20);
+                sn_param.Value = bot.SerialNumber;
+                cmd.Parameters.Add(sn_param);
+
+                MySqlParameter st_param = new MySqlParameter("@st", MySqlDbType.Int32, 4);
+                st_param.Value = bot.BoatNumStatus;
+                cmd.Parameters.Add(st_param);
+
+                MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
+                id_param.Value = bot.BoatID;
+                cmd.Parameters.Add(id_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                //MessageBox.Show("Boat adding! Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Boat updating => Error : " + ex);
             }
             finally
             {

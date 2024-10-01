@@ -10,23 +10,42 @@ namespace BoatStation
 {
     public class Boat
     {
+        public static string[] TypeStatus = { "OK", "TO", "Ремонт", "Del"}; 
         public int BoatID { get; }
         public string BoatName { get; }
         public string Description { get; }
         public string SerialNumber { get; }
+        public int BoatNumStatus { get { return status; } }
+        public string Status { get { return TypeStatus[status]; } }
+        int status = 0;
 
         public Boat() { }
-        public Boat(int id, string nm, string descr, string sn)
+        public Boat(int id, string nm, string descr, string sn, int st = 0)
         {
             BoatID = id;
             BoatName = nm;
             Description = descr;
             SerialNumber = sn;
+            status = st;
         }
 
         public override string ToString()
         {
-            return $"BoatID {BoatID:0000} {BoatName, -20} {SerialNumber, -15} {Description}";
+            return $"BoatID {BoatID:D04} {BoatName, -20} {SerialNumber, -15} {Description} {Status}";
+        }
+
+        public void SetStatus(int st)
+        {
+            if (st >= 0 && st < 4) status = st;
+        }
+
+        public bool Compare(Boat bt)
+        {
+            if (bt.BoatName != BoatName) return false;
+            if (bt.BoatNumStatus != status) return false;
+            if (bt.Description != Description) return false;
+            if (bt.SerialNumber != SerialNumber) return false;
+            return true;
         }
 
         public static List<Boat> GetBoatList()
@@ -40,7 +59,7 @@ namespace BoatStation
                 MySqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
                 MySqlDataReader reader = cmd.ExecuteReader();
-                int id;
+                int id, st;
                 string name, sn, descr;
 
                 while (reader.Read())
@@ -49,7 +68,8 @@ namespace BoatStation
                     name = reader[1].ToString();
                     descr = reader[2].ToString();
                     sn = reader[3].ToString();
-                    list.Add(new Boat(id, name, descr, sn));
+                    int.TryParse(reader[4].ToString(), out st);
+                    list.Add(new Boat(id, name, descr, sn, st));
                     //string s = string.Format("id:{0} name:{1} email:{2} password:{3} rule:{4}", id, name, eml, password, rule);
                 }
                 reader.Close();
@@ -80,7 +100,7 @@ namespace BoatStation
                 cmd.CommandText = sql;
                 cmd.Parameters.AddWithValue("@id", boat_id);
                 MySqlDataReader reader = cmd.ExecuteReader();
-                int id;
+                int id, st;
                 string name, sn, descr;
 
                 while (reader.Read())
@@ -89,7 +109,8 @@ namespace BoatStation
                     name = reader[1].ToString();
                     descr = reader[2].ToString();
                     sn = reader[3].ToString();
-                    resBoat = new Boat(id, name, descr, sn);
+                    int.TryParse(reader[4].ToString(), out st);
+                    resBoat = new Boat(id, name, descr, sn, st);
                 }
                 reader.Close();
             }

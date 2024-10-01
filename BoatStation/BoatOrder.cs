@@ -219,7 +219,11 @@ namespace BoatStation
                 Hour20 = s[13];
                 if (int.TryParse(BoatNumber, out int id))
                 {
-                    BoatName = Boat.GetBoat(id).BoatName;
+                    Boat bot = Boat.GetBoat(id);
+                    if (bot != null)
+                    {
+                        BoatName = $"{bot.BoatName} {bot.Status}";
+                    }
                 }
             }
         }
