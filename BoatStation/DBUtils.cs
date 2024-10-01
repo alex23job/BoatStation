@@ -124,6 +124,38 @@ namespace BoatStation
             }
         }
 
+        public static void DelUser(MyUser mu)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "DELETE FROM tbl_user WHERE user_id = @boid";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
+                id_param.Value = mu.ID;
+                cmd.Parameters.Add(id_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                //MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
+
         public static void AddClient(MyClient mc)
         {
             MySqlConnection connection = DBUtils.GetDBConnection();
@@ -201,6 +233,38 @@ namespace BoatStation
                 MySqlParameter pasp_param = new MySqlParameter("@pasport", MySqlDbType.String, 12);
                 pasp_param.Value = mc.Pasport;
                 cmd.Parameters.Add(pasp_param);
+
+                MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
+                id_param.Value = mc.ClientID;
+                cmd.Parameters.Add(id_param);
+
+                int rowCount = cmd.ExecuteNonQuery();
+                //MessageBox.Show("Row Count affected = " + rowCount.ToString());
+                //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                //listBox1.Items.Add("Error : " + ex);
+                MessageBox.Show("Error : " + ex);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+                connection = null;
+            }
+        }
+
+        public static void DelClient(MyClient mc)
+        {
+            MySqlConnection connection = DBUtils.GetDBConnection();
+            connection.Open();
+            try
+            {
+                string sql = "DELETE FROM tbl_client WHERE id = @boid";
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
 
                 MySqlParameter id_param = new MySqlParameter("@boid", MySqlDbType.Int32, 4);
                 id_param.Value = mc.ClientID;

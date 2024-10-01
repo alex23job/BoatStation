@@ -278,7 +278,37 @@ namespace BoatStation
 
         private void OnDelUserClick(object sender, RoutedEventArgs e)
         {
-
+            if (userList.SelectedItem == null)
+            {
+                MessageBox.Show("Для удаления нужно выбрать пользователя !");
+                return;
+            }
+            string sNum = userList.SelectedItem as string;
+            sNum = sNum.Substring(5, 4);
+            MyUser editUser = null;
+            if (int.TryParse(sNum, out int uid)) editUser = MyUser.GetUser(uid);
+            if (editUser != null)
+            {
+                if (MessageBox.Show($"Выбран пользователь : ID:{editUser.ID} {MyUser.Rules[editUser.Rule]} {editUser.Name} (логин:{editUser.Email})\n\nУдалить пользователя ?", "Удаление пользователя", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    if (editUser.Rule == 0)
+                    {
+                        orders = BoatOrder.GetOrdersList();
+                        foreach (BoatOrder bo in orders)
+                        {
+                            if (bo.IsEdit)
+                            {
+                                DBUtils.UpdateBoatOrder(bo);
+                                bo.ChangeSaved();
+                            }
+                        }
+                        MyClient delClient = MyClient.GetClient(editUser.ID);
+                        if (delClient != null) DBUtils.DelClient(delClient);
+                    }
+                    DBUtils.DelUser(editUser);
+                    ViewAdminPanel();
+                }
+            }
         }
 
         private void OnNewBoatClick(object sender, RoutedEventArgs e)

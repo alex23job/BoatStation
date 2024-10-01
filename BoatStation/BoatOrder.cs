@@ -95,6 +95,19 @@ namespace BoatStation
             }
         }
 
+        public void ClearClientOrders(int uid)
+        {
+            string s_uid = $"{uid:D04}";
+            for (int i = 0; i < 12; i++)
+            {
+                if (hourOrders[i] == s_uid)
+                {
+                    hourOrders[i] = "";
+                    isEdit = true;
+                }
+            }
+        }
+
         public bool CheckOrders(DateTime dt, int bid)
         {
             return (dt.Day == date.Day) && (dt.Month == date.Month) && (dt.Year == date.Year) && (bid == BoatID); 
