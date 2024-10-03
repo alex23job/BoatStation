@@ -20,6 +20,7 @@ namespace BoatStation
     public partial class ClientOrdersWindow : Window
     {
         DateTime currentDate = DateTime.Now;
+        List<BoatOrder> orders = null;
         public ClientOrdersWindow()
         {
             InitializeComponent();
@@ -57,7 +58,32 @@ namespace BoatStation
 
         private void OnSelectionBoatChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (cmbBoats.SelectedItem != null)
+            {
+                string sNum = cmbBoats.SelectedItem as string;
+                sNum = sNum.Substring(7, 4);
+                if (int.TryParse(sNum, out int uid) && orders != null)
+                {
+                    foreach(BoatOrder bor in orders)
+                    {
+                        if (bor.CheckOrders(currentDate, uid))
+                        {
+                            cmbHour.ItemsSource = bor.GetFreeHours();
+                            cmbHour.SelectedIndex = 0;
+                            return;
+                        }
+                    }
+                    BoatOrder boatOrder = new BoatOrder(currentDate, uid);
+                    cmbHour.ItemsSource = boatOrder.GetFreeHours();
+                    cmbHour.SelectedIndex = 0;
+                    orders.Add(boatOrder);
+                }
+            }
+        }
 
+        public void SetBoatOrders(List<BoatOrder> boatOrders)
+        {
+            orders = boatOrders;
         }
     }
 }

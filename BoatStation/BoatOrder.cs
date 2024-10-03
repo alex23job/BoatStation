@@ -113,6 +113,18 @@ namespace BoatStation
             return (dt.Day == date.Day) && (dt.Month == date.Month) && (dt.Year == date.Year) && (bid == BoatID); 
         }
 
+        public List<string> GetFreeHours()
+        {
+            List<string> listHour = new List<string>();
+            int hour = 9;
+            foreach (string sH in hourOrders)
+            {
+                if (sH == "") listHour.Add($"{hour:D02}:00");
+                hour++;
+            }
+            return listHour;
+        }
+
         public static List<BoatOrder> GetOrdersList()
         {
             MySqlConnection connection = DBUtils.GetDBConnection();

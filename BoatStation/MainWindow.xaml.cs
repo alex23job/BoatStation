@@ -45,6 +45,7 @@ namespace BoatStation
             if (currentClient != null)
             {
                 cow.Title = $"Заказы кдиента {currentClient.SecondName}";
+                cow.SetBoatOrders(orders);
                 if (cow.ShowDialog() == true)
                 {
 
@@ -141,7 +142,14 @@ namespace BoatStation
                 if (boats == null) boats = Boat.GetBoatList();
                 foreach (Boat bot in boats) orders.Add(new BoatOrder(currentDate, bot.BoatID));
             }
-            ordersData.ItemsSource = BoatOrder.GetOrdersViewList(orders, currentDate);
+            List<OrderView> orderViews = BoatOrder.GetOrdersViewList(orders, currentDate);
+            if (orderViews.Count == 0)
+            {
+                if (boats == null) boats = Boat.GetBoatList();
+                foreach (Boat bot in boats) if (bot.BoatNumStatus == 0) orders.Add(new BoatOrder(currentDate, bot.BoatID));
+                orderViews = BoatOrder.GetOrdersViewList(orders, currentDate);
+            }
+            ordersData.ItemsSource = orderViews;
             loginView.Visibility = Visibility.Hidden;
             ordersView.Visibility = Visibility.Visible;
         }
