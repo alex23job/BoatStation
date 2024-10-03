@@ -42,10 +42,13 @@ namespace BoatStation
         private void OnNewOrderClick(object sender, RoutedEventArgs e)
         {
             ClientOrdersWindow cow = new ClientOrdersWindow();
-            if (currentClient != null) cow.Title = $"Заказы кдиента {currentClient.SecondName}";
-            if (cow.ShowDialog() == true)
+            if (currentClient != null)
             {
+                cow.Title = $"Заказы кдиента {currentClient.SecondName}";
+                if (cow.ShowDialog() == true)
+                {
 
+                }
             }
         }
 

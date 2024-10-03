@@ -22,6 +22,9 @@
         <Label Content="Выберите дату : " Foreground="#FF1305A4" Grid.Row="1" VerticalAlignment="Center" Margin="10,0,0,0"/>
         <TextBlock Text="Выберите плавсредство : " Grid.Row="2" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Foreground="#FF1305A4"/>
         <Label Content="Выберите время : " Grid.Row="3" VerticalAlignment="Center" Foreground="#FF1305A4" Margin="10,0,0,0"/>
+        <DatePicker x:Name="date" Grid.Row="1" Grid.Column="1" IsDropDownOpen="False" SelectedDateFormat="Short" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedDateChanged="OnSelectedDataChanged" Foreground="#FF1305A4" />
+        <ComboBox x:Name="cmbBoats" Grid.Row="2" Grid.Column="1" Margin="5" IsReadOnly="True" Foreground="#FF0068FF" Background="#FFA2E6F5" BorderBrush="#FF08088D" SelectionChanged="OnSelectionBoatChanged"/>
+        <ComboBox x:Name="cmbHour" Grid.Row="3" Grid.Column="1" Margin="5" IsReadOnly="True" Foreground="#FF0068FF" Background="#FFA2E6F5" BorderBrush="#FF08088D" SelectionChanged="OnSelectionHourChanged"/>
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="btnCancel" Content="Отменить" Foreground="#FF00009E" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="45" IsCancel="True" Margin="20,0" Background="#FF90C8EE"/>
             <Button x:Name="btnOK" Content="Добавить" Foreground="#FF00009E" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="45" IsDefault="True" Click="OnOK_Click" Margin="20,0" Background="#FF90C8EE"/>
