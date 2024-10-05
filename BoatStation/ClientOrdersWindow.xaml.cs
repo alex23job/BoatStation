@@ -21,6 +21,8 @@ namespace BoatStation
     {
         DateTime currentDate = DateTime.Now;
         List<BoatOrder> orders = null;
+        BoatOrder currentBoatOrder = null;
+        int ClientID = 0;
         public ClientOrdersWindow()
         {
             InitializeComponent();
@@ -28,7 +30,17 @@ namespace BoatStation
 
         private void OnOK_Click(object sender, RoutedEventArgs e)
         {
-
+            if (cmbBoats.Items.Count > 0 && cmbHour.Items.Count > 0 && currentBoatOrder != null)
+            {
+                string sNum = cmbHour.SelectedItem as string;
+                sNum = sNum.Substring(0, 2);
+                if (int.TryParse(sNum, out int h))
+                {
+                    currentBoatOrder.SetOrder(h - 9, ClientID);
+                }
+            }
+            else return;
+            DialogResult = true;
         }
 
         private void OnSelectedDataChanged(object sender, SelectionChangedEventArgs e)
@@ -44,7 +56,19 @@ namespace BoatStation
                 List<string> ls = new List<string>();
                 foreach (Boat b in lb)
                 {
-                    if (b.BoatNumStatus == 0) ls.Add($"BoatID {b.BoatID:D04} {b.BoatName,-20}");
+                    if (b.BoatNumStatus == 0)
+                    {
+                        ls.Add($"BoatID {b.BoatID:D04} {b.BoatName,-20}");
+                        bool isNew = true;
+                        foreach (BoatOrder bor in orders)
+                        {
+                            if (bor.CheckOrders(currentDate, b.BoatID))
+                            {
+                                isNew = false;break;
+                            }
+                        }
+                        if (isNew) orders.Add(new BoatOrder(currentDate, b.BoatID));
+                    }
                 }
                 cmbBoats.ItemsSource = ls;
                 cmbBoats.SelectedIndex = 0;
@@ -70,6 +94,7 @@ namespace BoatStation
                         {
                             cmbHour.ItemsSource = bor.GetFreeHours();
                             cmbHour.SelectedIndex = 0;
+                            currentBoatOrder = bor;
                             return;
                         }
                     }
@@ -77,13 +102,15 @@ namespace BoatStation
                     cmbHour.ItemsSource = boatOrder.GetFreeHours();
                     cmbHour.SelectedIndex = 0;
                     orders.Add(boatOrder);
+                    currentBoatOrder = boatOrder;
                 }
             }
         }
 
-        public void SetBoatOrders(List<BoatOrder> boatOrders)
+        public void SetBoatOrders(List<BoatOrder> boatOrders, int id)
         {
             orders = boatOrders;
+            ClientID = id;
         }
     }
 }

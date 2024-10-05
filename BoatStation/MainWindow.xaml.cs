@@ -45,11 +45,10 @@ namespace BoatStation
             if (currentClient != null)
             {
                 cow.Title = $"Заказы кдиента {currentClient.SecondName}";
-                cow.SetBoatOrders(orders);
+                cow.SetBoatOrders(orders, currentClient.ClientUser.ID);
                 if (cow.ShowDialog() == true)
                 {
-
-                }
+                    UpdateViewOrdersPanel();                }
             }
         }
 
