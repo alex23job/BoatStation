@@ -55,18 +55,24 @@ namespace BoatStation
 
         private void OnDelOrderClick(object sender, RoutedEventArgs e)
         {
-            EditOrdersWindow ew = new EditOrdersWindow();
-            ew.Title = $"Заказы клиента {currentClient.SecondName}";
-            ew.SetParams(orders, currentClient);
-            if (ew.ShowDialog() == true) { UpdateViewOrdersPanel(); }
+            if (currentClient != null)
+            {
+                EditOrdersWindow ew = new EditOrdersWindow();
+                ew.Title = $"Заказы клиента {currentClient.SecondName}";
+                ew.SetParams(orders, currentClient);
+                if (ew.ShowDialog() == true) { UpdateViewOrdersPanel(); }
+            }
         }
 
         private void OnEditOrderClick(object sender, RoutedEventArgs e)
         {
-            EditOrdersWindow ew = new EditOrdersWindow();
-            ew.Title = $"Заказы клиента {currentClient.SecondName}";
-            ew.SetParams(orders, currentClient);
-            if (ew.ShowDialog() == true) { UpdateViewOrdersPanel(); }
+            if (currentClient != null)
+            {
+                EditOrdersWindow ew = new EditOrdersWindow();
+                ew.Title = $"Заказы клиента {currentClient.SecondName}";
+                ew.SetParams(orders, currentClient);
+                if (ew.ShowDialog() == true) { UpdateViewOrdersPanel(); }
+            }
         }
 
         private void OnManualClick(object sender, RoutedEventArgs e)
