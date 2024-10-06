@@ -71,7 +71,8 @@ namespace BoatStation
 
         private void OnManualClick(object sender, RoutedEventArgs e)
         {
-
+            InstructionWindow wi = new InstructionWindow();
+            wi.ShowDialog();
         }
 
         private void OnLoginBtnClick(object sender, RoutedEventArgs e)
