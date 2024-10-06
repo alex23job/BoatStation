@@ -125,6 +125,19 @@ namespace BoatStation
             return listHour;
         }
 
+        public List<string> GetClientOrder(string ClientID, Boat boat)
+        {
+            List<string> res = new List<string>();
+            for(int i = 0; i < 12; i++)
+            {
+                if (hourOrders[i] == ClientID)
+                {
+                    res.Add($"{strDate} SN:{boat.SerialNumber} {boat.BoatName} Час< {i + 9:D02}:00 > <{id:D04}>");
+                }
+            }
+            return res;
+        }
+
         public static List<BoatOrder> GetOrdersList()
         {
             MySqlConnection connection = DBUtils.GetDBConnection();

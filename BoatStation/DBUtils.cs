@@ -399,7 +399,7 @@ namespace BoatStation
                 cmd.Parameters.Add(ord_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
-                MessageBox.Show("BoatOrders adding! Row Count affected = " + rowCount.ToString());
+                //MessageBox.Show("BoatOrders adding! Row Count affected = " + rowCount.ToString());
                 //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
 
             }
@@ -439,7 +439,7 @@ namespace BoatStation
                 cmd.Parameters.Add(id_param);
 
                 int rowCount = cmd.ExecuteNonQuery();
-                MessageBox.Show("BoatOrders adding! Row Count affected = " + rowCount.ToString());
+                //MessageBox.Show("BoatOrders updating! Row Count affected = " + rowCount.ToString());
                 //listBox1.Items.Add("Row Count affected = " + rowCount.ToString());
 
             }

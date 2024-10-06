@@ -24,6 +24,9 @@
             <Button x:Name="delBooking" Content="Снять бронь" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnDelOrderClick"/>
             <Button x:Name="editBooking" Content="Изменить бронь" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnEditOrderClick"/>
             <Button x:Name="manual" Content="Инструкция" Background="#FF90D0EE" Height="40" Margin="5" FontSize="24" FontWeight="Bold" Foreground="#FF011593" Click="OnManualClick"/>
+            <Border Background="#FF9D99FF" BorderBrush="#FFD087F9" Margin="10,15" BorderThickness="5" CornerRadius="15" Height="80">
+                <TextBlock x:Name="dataClient" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="24" FontWeight="Bold" />
+            </Border>
         </StackPanel>
         <StackPanel x:Name="loginView" Orientation="Vertical" Grid.Column="1" Grid.RowSpan="2" Visibility="Visible">
             <TextBlock Text="Добро пожаловать на лодочную станцию нашего города !" Foreground="#FFCFEEFD" HorizontalAlignment="Center" Margin="0,50,0,20" FontSize="36" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center"/>

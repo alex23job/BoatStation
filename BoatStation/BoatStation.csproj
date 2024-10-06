@@ -118,6 +118,9 @@
     <Compile Include="ClientOrdersWindow.xaml.cs">
       <DependentUpon>ClientOrdersWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditOrdersWindow.xaml.cs">
+      <DependentUpon>EditOrdersWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyClient.cs" />
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ClientOrdersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditOrdersWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

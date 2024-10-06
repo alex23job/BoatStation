@@ -44,22 +44,29 @@ namespace BoatStation
             ClientOrdersWindow cow = new ClientOrdersWindow();
             if (currentClient != null)
             {
-                cow.Title = $"Заказы кдиента {currentClient.SecondName}";
+                cow.Title = $"Заказы клиента {currentClient.SecondName}";
                 cow.SetBoatOrders(orders, currentClient.ClientUser.ID);
                 if (cow.ShowDialog() == true)
                 {
-                    UpdateViewOrdersPanel();                }
+                    UpdateViewOrdersPanel();
+                }
             }
         }
 
         private void OnDelOrderClick(object sender, RoutedEventArgs e)
         {
-
+            EditOrdersWindow ew = new EditOrdersWindow();
+            ew.Title = $"Заказы клиента {currentClient.SecondName}";
+            ew.SetParams(orders, currentClient);
+            if (ew.ShowDialog() == true) { UpdateViewOrdersPanel(); }
         }
 
         private void OnEditOrderClick(object sender, RoutedEventArgs e)
         {
-
+            EditOrdersWindow ew = new EditOrdersWindow();
+            ew.Title = $"Заказы клиента {currentClient.SecondName}";
+            ew.SetParams(orders, currentClient);
+            if (ew.ShowDialog() == true) { UpdateViewOrdersPanel(); }
         }
 
         private void OnManualClick(object sender, RoutedEventArgs e)
@@ -83,7 +90,8 @@ namespace BoatStation
                     {
                         currentClient = MyClient.GetClient(currentUser.ID);
                         ViewOrdersPanel();
-                    }                    
+                    }
+                    dataClient.Text = $"{MyUser.Rules[currentUser.Rule]}\n{currentUser.Name}";
                     return;
                 }
             }
@@ -106,6 +114,7 @@ namespace BoatStation
                             rw.Client.SetUser(currentUser);
                             DBUtils.AddClient(rw.Client);
                             currentClient = MyClient.GetClient(currentUser.ID);
+                            dataClient.Text = $"{MyUser.Rules[currentUser.Rule]}\n{currentUser.Name}";
                             ViewOrdersPanel();
                         }
                         else

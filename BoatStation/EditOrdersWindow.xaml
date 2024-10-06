@@ -1,0 +1,28 @@
+﻿<Window x:Class="BoatStation.EditOrdersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BoatStation"
+        mc:Ignorable="d"
+        Title="EditOrdersWindow" Height="500" Width="600" Background="#FFC9E2FF" Foreground="#FF030E7A" MinWidth="600" MinHeight="500" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold" MaxWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="TileWindow" Content="Изменение или удаление брони" HorizontalAlignment="Center" Grid.ColumnSpan="2" Foreground="#FF1305A4" VerticalAlignment="Center" FontWeight="Bold" FontSize="36"/>
+        <ListView x:Name="listOrders" Grid.Row="1" Background="#FFE6EFFF" Foreground="#FF1305A4" SelectionChanged="OnSelectionOrderChanged"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,9" Grid.Row="2">
+            <ComboBox x:Name="cmbHours" Foreground="#FF1305A4" Width="99" Margin="10,5" VerticalAlignment="Center" SelectionChanged="OnSelectionHourChanged"/>
+            <Button x:Name="changeBtn" Content="Изменить" Background="#FF7CB7E8" Foreground="#FF1305A4" VerticalAlignment="Center" FontSize="24" Height="40" Width="140" Margin="0,0,30,0" Click="OnChangeBtnClick"/>
+            <Button x:Name="delBtn" Content="Удалить" Background="#FF7CB7E8" Foreground="#FF1305A4" Width="140" Margin="50,0,0,0" VerticalAlignment="Center" Height="40" Click="OnDelButtonClick" FontSize="24"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+            <Button x:Name="okBtn" Content="Сохранить" Background="#FF7CB7E8" Foreground="#FF1305A4" Width="160" Margin="30,10" FontSize="24" Click="OnOkClick"/>
+            <Button x:Name="exitBtn" Content="Закрыть" Background="#FF7CB7E8" Foreground="#FF1305A4" Width="160" Margin="30, 10" IsCancel="True" FontSize="24"/>
+        </StackPanel>
+    </Grid>
+</Window>
